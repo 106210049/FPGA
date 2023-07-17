@@ -1,22 +1,28 @@
-module JKFF(J,K,clock,out)
-input K,J,clock;
-output out;
+module Verilog1(J,K,clock,Q,H,Reset,Preset);
+input J,K,clock,Reset,Preset;
+output Q,H;
+reg Q,H;
 always @(posedge clock)
-begin 
+
+	
 if(J==1&&K==0)
-begin 
-assign out=1'b1;
-end
+	begin 
+		Q<=1'b1;
+		H<=!Q;
+	end
 else if(J==0&&K==1)
-begin
-assign out=1'b0;
-end
-else if(J==0&&K==0)
-begin 
-assign out=out;
-end
-else 
-begin
-assign out=~out;
-end
+	begin
+		Q<=1'b0;
+		H<=!Q;
+	end
+else if(J==1&&K==1)
+	begin
+		Q=!Q;
+		H=!Q;
+	end
+else
+	begin
+		Q<=Q;
+		H<=!Q;
+	end
 endmodule
